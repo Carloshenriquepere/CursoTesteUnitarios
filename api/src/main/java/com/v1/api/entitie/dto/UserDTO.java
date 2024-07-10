@@ -1,5 +1,6 @@
 package com.v1.api.entitie.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ public class UserDTO {
 
     private String email;
 
+    @JsonIgnore
     private String password;
 
 
