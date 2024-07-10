@@ -2,7 +2,6 @@ package com.v1.api.controller.exception;
 
 import com.v1.api.service.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
-import org.aspectj.lang.annotation.AdviceName;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
