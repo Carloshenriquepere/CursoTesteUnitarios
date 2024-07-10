@@ -1,5 +1,6 @@
 package com.v1.api.controller.exception;
 
+import com.v1.api.service.exceptions.DataIntegratyViolationException;
 import com.v1.api.service.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -13,8 +14,14 @@ import java.time.LocalDateTime;
 public class ControllerExceptionHandler {
 
     @ExceptionHandler(ObjectNotFoundException.class)
-    public ResponseEntity<StandardError>objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> objectNotFound(ObjectNotFoundException e, HttpServletRequest request){
         StandardError error = new StandardError(LocalDateTime.now(), HttpStatus.NOT_FOUND.value(), e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(DataIntegratyViolationException.class)
+    public ResponseEntity<StandardError> dataIntegratyViolationException(DataIntegratyViolationException e, HttpServletRequest request){
+        StandardError error = new StandardError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(), e.getMessage(), request.getRequestURI());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }

@@ -4,6 +4,7 @@ import com.v1.api.entitie.User;
 import com.v1.api.entitie.dto.UserDTO;
 import com.v1.api.repository.UserRepository;
 import com.v1.api.service.UserService;
+import com.v1.api.service.exceptions.DataIntegratyViolationException;
 import com.v1.api.service.exceptions.ObjectNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,21 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> finAll() {
        List<User> list = userRepository.findAll();
         return list.stream().map(x -> modelMapper.map(x , UserDTO.class)).toList();
+    }
+
+    @Override
+    public User created(UserDTO users) {
+        finByEmail(users);
+        User newUser = modelMapper.map(users, User.class);
+        newUser = userRepository.save(newUser);
+        return newUser;
+    }
+
+    private void finByEmail(UserDTO email) {
+        Optional<User> user = userRepository.findByEmail(email.getEmail());
+        if (user.isPresent()) {
+            throw  new DataIntegratyViolationException("Email Already Exists");
+        }
     }
 
 

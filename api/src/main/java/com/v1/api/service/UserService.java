@@ -10,4 +10,8 @@ public interface UserService {
     UserDTO finById(Integer id);
 
     List<UserDTO> finAll();
+
+    User created(UserDTO userDTO);
+
+
 }
