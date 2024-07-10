@@ -16,7 +16,6 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<User> FindById(@PathVariable Integer id){
-        userService.finById(id);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().body(userService.finById(id));
     }
 }
