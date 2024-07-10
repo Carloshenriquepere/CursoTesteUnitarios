@@ -1,7 +1,8 @@
 package com.v1.api.service;
 
-import org.springframework.stereotype.Service;
+import com.v1.api.entitie.User;
 
-@Service
-public class UserService {
+public interface UserService {
+
+    User finById(Integer id);
 }
