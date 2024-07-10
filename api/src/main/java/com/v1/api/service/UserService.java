@@ -1,8 +1,13 @@
 package com.v1.api.service;
 
 import com.v1.api.entitie.User;
+import com.v1.api.entitie.dto.UserDTO;
+
+import java.util.List;
 
 public interface UserService {
 
-    User finById(Integer id);
+    UserDTO finById(Integer id);
+
+    List<UserDTO> finAll();
 }
