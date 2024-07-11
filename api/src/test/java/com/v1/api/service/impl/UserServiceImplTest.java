@@ -143,6 +143,20 @@ class UserServiceImplTest {
     }
 
     @Test
+    void whenUpdateThenReturnAnDataIntegratyViolationException() {
+        when(userRepository.findByEmail(anyString())).thenReturn(userOptional);
+
+        try {
+            userOptional.get().setId(2);
+            userServiceImpl.created(userDTO);
+        }catch (Exception e) {
+            assertEquals(DataIntegratyViolationException.class, e.getClass());
+            assertEquals(EMAIL_ALREADY_EXISTS, e.getMessage());
+        }
+
+    }
+
+    @Test
     void whenDeleteThenReturnDeleteUser() {
 
     }
