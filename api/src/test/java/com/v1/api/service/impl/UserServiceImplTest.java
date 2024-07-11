@@ -27,6 +27,7 @@ class UserServiceImplTest {
     public static final String NAME = "test";
     public static final String EMAIL = "teste@email.com";
     public static final String PASSWORD = "1254";
+    public static final String USER_NOT_FOUND = "User Not Found";
 
     @InjectMocks
     private UserServiceImpl userServiceImpl;
@@ -66,14 +67,14 @@ class UserServiceImplTest {
     @Test
     void whenFindByIdThenReturnObjectNotFoundException() {
 
-        when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException("User Not Found"));
+        when(userRepository.findById(anyInt())).thenThrow(new ObjectNotFoundException(USER_NOT_FOUND));
 
         try {
             userServiceImpl.findById(ID);
 
         }catch (Exception e) {
             assertEquals(ObjectNotFoundException.class, e.getClass());
-            assertEquals("User Not Found", e.getMessage());
+            assertEquals(USER_NOT_FOUND, e.getMessage());
         }
     }
 
