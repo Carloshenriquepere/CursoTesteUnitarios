@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDTO finById(Integer id);
+    User findById(Integer id);
 
     List<UserDTO> finAll();
 

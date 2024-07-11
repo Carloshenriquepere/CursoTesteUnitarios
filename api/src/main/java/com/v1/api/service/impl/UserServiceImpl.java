@@ -25,9 +25,9 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDTO finById(Integer id) {
+    public User findById(Integer id) {
         Optional<User> user = userRepository.findById(id);
-        return modelMapper.map(user.orElseThrow(()-> new ObjectNotFoundException("User Not Found")), UserDTO.class);
+        return user.orElseThrow(()-> new ObjectNotFoundException("User Not Found"));
     }
 
     @Override
@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void delete(Integer id) {
-        finById(id);
+        findById(id);
         userRepository.deleteById(id);
     }
 
