@@ -1,6 +1,5 @@
 package com.v1.api.controller;
 
-import com.v1.api.entitie.User;
 import com.v1.api.entitie.dto.UserDTO;
 import com.v1.api.service.UserService;
 import org.modelmapper.ModelMapper;
@@ -11,6 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/users")
@@ -32,7 +32,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll(){
-        return ResponseEntity.ok().body(userService.finAll().stream().map(x -> modelMapper.map(x, UserDTO.class)).toList());
+        return ResponseEntity.ok().body(userService.finAll().stream().map(x -> modelMapper.map(x, UserDTO.class)).collect(Collectors.toList()));
     }
 
     @PostMapping
