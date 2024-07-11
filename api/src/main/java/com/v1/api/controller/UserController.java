@@ -16,6 +16,8 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserController {
 
+    public static final String ID = "/{id}";
+
     @Autowired
     private UserService userService;
 
@@ -23,7 +25,7 @@ public class UserController {
     private ModelMapper modelMapper;
 
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = ID)
     public ResponseEntity<UserDTO> FindById(@PathVariable Integer id){
         return ResponseEntity.ok().body(userService.finById(id));
     }
@@ -40,9 +42,15 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping(value = "/{id}")
+    @PutMapping(value = ID)
     public ResponseEntity<UserDTO> update(@PathVariable Integer id, @RequestBody UserDTO userDTO){
         userDTO.setId(id);
         return ResponseEntity.ok().body(modelMapper.map(userService.update(userDTO), UserDTO.class));
+    }
+
+    @DeleteMapping(value = ID)
+    public ResponseEntity<Void> delete(@PathVariable Integer id){
+        userService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

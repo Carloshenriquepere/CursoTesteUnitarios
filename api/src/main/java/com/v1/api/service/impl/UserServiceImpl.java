@@ -48,6 +48,12 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(modelMapper.map(userDTO, User.class));
     }
 
+    @Override
+    public void delete(Integer id) {
+        finById(id);
+        userRepository.deleteById(id);
+    }
+
     private void findByEmail(UserDTO email) {
         Optional<User> user = userRepository.findByEmail(email.getEmail());
 
