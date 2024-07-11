@@ -32,7 +32,7 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> findAll(){
-        return ResponseEntity.ok().body(userService.finAll());
+        return ResponseEntity.ok().body(userService.finAll().stream().map(x -> modelMapper.map(x, UserDTO.class)).toList());
     }
 
     @PostMapping

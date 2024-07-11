@@ -31,9 +31,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> finAll() {
-       List<User> list = userRepository.findAll();
-        return list.stream().map(x -> modelMapper.map(x , UserDTO.class)).toList();
+    public List<User> finAll() {
+        return userRepository.findAll();
     }
 
     @Override

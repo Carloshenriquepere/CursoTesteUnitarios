@@ -9,7 +9,7 @@ public interface UserService {
 
     User findById(Integer id);
 
-    List<UserDTO> finAll();
+    List<User> finAll();
 
     User created(UserDTO userDTO);
 
