@@ -3,6 +3,7 @@ package com.v1.api.service.impl;
 import com.v1.api.entitie.User;
 import com.v1.api.entitie.dto.UserDTO;
 import com.v1.api.repository.UserRepository;
+import com.v1.api.service.exceptions.DataIntegratyViolationException;
 import com.v1.api.service.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,14 +14,14 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.List;
 import java.util.Optional;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
@@ -32,6 +33,7 @@ class UserServiceImplTest {
     public static final String PASSWORD = "1254";
     public static final String USER_NOT_FOUND = "User Not Found";
     public static final int INDEX = 0;
+    public static final String EMAIL_ALREADY_EXISTS = "Email Already Exists";
 
     @InjectMocks
     private UserServiceImpl userServiceImpl;
@@ -113,7 +115,21 @@ class UserServiceImplTest {
     }
 
     @Test
-    void update() {
+    void whenCreatedThenReturnAnDataIntegratyViolationException() {
+        when(userRepository.findByEmail(anyString())).thenReturn(userOptional);
+
+        try {
+            userOptional.get().setId(2);
+            userServiceImpl.created(userDTO);
+        }catch (Exception e) {
+            assertEquals(DataIntegratyViolationException.class, e.getClass());
+            assertEquals(EMAIL_ALREADY_EXISTS, e.getMessage());
+        }
+
+    }
+
+    @Test
+    void whenUpdateThenReturnUpdatedUser() {
     }
 
     @Test
