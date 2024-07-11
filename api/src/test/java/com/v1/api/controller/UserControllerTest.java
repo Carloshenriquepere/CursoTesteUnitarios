@@ -28,9 +28,8 @@ class UserControllerTest {
     public static final String NAME = "test";
     public static final String EMAIL = "teste@email.com";
     public static final String PASSWORD = "1254";
-    public static final String USER_NOT_FOUND = "User Not Found";
     public static final int INDEX = 0;
-    public static final String EMAIL_ALREADY_EXISTS = "Email Already Exists";
+
 
     @InjectMocks
     private UserController userController;
