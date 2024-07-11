@@ -41,7 +41,7 @@ class UserControllerTest {
     private ModelMapper modelMapper;
 
     private User user;
-    private UserDTO userDTO;
+    private UserDTO userDTO = new UserDTO();
 
 
     @BeforeEach
