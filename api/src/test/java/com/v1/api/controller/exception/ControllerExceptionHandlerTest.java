@@ -2,6 +2,7 @@ package com.v1.api.controller.exception;
 
 
 
+import com.v1.api.service.exceptions.DataIntegratyViolationException;
 import com.v1.api.service.exceptions.ObjectNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockHttpServletRequest;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 class ControllerExceptionHandlerTest {
@@ -44,10 +46,24 @@ class ControllerExceptionHandlerTest {
         assertEquals(StandardError.class, response.getBody().getClass());
         assertEquals(USER_NOT_FOUND, response.getBody().getError());
         assertEquals(404, response.getBody().getStatus());
+        assertNotEquals("/users/2", response.getBody().getPath());
+        assertNotEquals(LocalDateTime.now(), response.getBody().getTimestamp());
 
     }
 
     @Test
-    void dataIntegratyViolationException() {
+    void whenDataIntegratyViolationException() {
+
+        ResponseEntity<StandardError> response = exceptionHandler
+                .dataIntegratyViolationException(
+                        new DataIntegratyViolationException(EMAIL_ALREADY_EXISTS), new MockHttpServletRequest());
+
+        assertNotNull(response);
+        assertNotNull(response.getBody());
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertEquals(ResponseEntity.class, response.getClass());
+        assertEquals(StandardError.class, response.getBody().getClass());
+        assertEquals(EMAIL_ALREADY_EXISTS, response.getBody().getError());
+        assertEquals(400, response.getBody().getStatus());
     }
 }
